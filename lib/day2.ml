@@ -3,12 +3,10 @@ module CharIntMap = Map.Make (Char)
 let repitition_count ~n ~word =
   let char_count word =
     let f acc c =
-      let count =
-        CharIntMap.find_opt c acc
-        |> Core.Option.value ~default:0
-        |> fun x -> x + 1
-      in
-      CharIntMap.add c count acc
+      CharIntMap.update
+        c
+        (Core.Option.value_map ~default:(Some 1) ~f:(fun x -> Some (x + 1)))
+        acc
     in
     Core.String.fold word ~init:CharIntMap.empty ~f
   in
