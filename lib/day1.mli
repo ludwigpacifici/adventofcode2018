@@ -1,3 +1,3 @@
-val part1 : int list -> int
+val part1 : deltas:int list -> int
 
-val part2 : int list -> int -> int option
+val part2 : deltas:int list -> repeat_threshold:int -> int option
