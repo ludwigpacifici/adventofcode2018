@@ -10,9 +10,7 @@ let%test _ = parse_claim "#2 @ 3,1: 4x4" = (2, 3, 1, 4, 4)
 let%test _ = parse_claim "#3 @ 5,5: 2x2" = (3, 5, 5, 2, 2)
 
 let expand_claim x y wide tall =
-  let expand n shift =
-    List.init n (fun i -> i) |> List.map (fun i -> i + shift)
-  in
+  let expand n shift = List.init n (fun i -> i + shift) in
   let xs = expand wide x in
   let ys = expand tall y in
   Core.List.cartesian_product xs ys
