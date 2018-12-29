@@ -9,8 +9,10 @@ let collapse str =
     match stack with
     | [] ->
         [c]
-    | previous :: tl ->
-        if is_reducable c previous then tl else c :: stack
+    | previous :: tl when is_reducable c previous ->
+        tl
+    | _ :: _ ->
+        c :: stack
   in
   Core.String.fold str ~init:[] ~f |> Core.List.rev
 
@@ -64,33 +66,33 @@ let filter_az str =
 
 
 let%test _ =
-  filter_az "abcdefghiklmnopqrstvxyz"
-  = [ "abcdefghiklmnopqrstvxy"
-    ; "abcdefghiklmnopqrstvxz"
-    ; "abcdefghiklmnopqrstvyz"
-    ; "abcdefghiklmnopqrstvxyz"
-    ; "abcdefghiklmnopqrstxyz"
-    ; "abcdefghiklmnopqrstvxyz"
-    ; "abcdefghiklmnopqrsvxyz"
-    ; "abcdefghiklmnopqrtvxyz"
-    ; "abcdefghiklmnopqstvxyz"
-    ; "abcdefghiklmnoprstvxyz"
-    ; "abcdefghiklmnoqrstvxyz"
-    ; "abcdefghiklmnpqrstvxyz"
-    ; "abcdefghiklmopqrstvxyz"
-    ; "abcdefghiklnopqrstvxyz"
-    ; "abcdefghikmnopqrstvxyz"
-    ; "abcdefghilmnopqrstvxyz"
-    ; "abcdefghiklmnopqrstvxyz"
-    ; "abcdefghklmnopqrstvxyz"
-    ; "abcdefgiklmnopqrstvxyz"
-    ; "abcdefhiklmnopqrstvxyz"
-    ; "abcdeghiklmnopqrstvxyz"
-    ; "abcdfghiklmnopqrstvxyz"
-    ; "abcefghiklmnopqrstvxyz"
-    ; "abdefghiklmnopqrstvxyz"
-    ; "acdefghiklmnopqrstvxyz"
-    ; "bcdefghiklmnopqrstvxyz" ]
+  filter_az "abcdefghiklmnopqrstvxyzABCDEFGHIKLMNOPQRSTVXYZ"
+  = [ "abcdefghiklmnopqrstvxyABCDEFGHIKLMNOPQRSTVXY"
+    ; "abcdefghiklmnopqrstvxzABCDEFGHIKLMNOPQRSTVXZ"
+    ; "abcdefghiklmnopqrstvyzABCDEFGHIKLMNOPQRSTVYZ"
+    ; "abcdefghiklmnopqrstvxyzABCDEFGHIKLMNOPQRSTVXYZ"
+    ; "abcdefghiklmnopqrstxyzABCDEFGHIKLMNOPQRSTXYZ"
+    ; "abcdefghiklmnopqrstvxyzABCDEFGHIKLMNOPQRSTVXYZ"
+    ; "abcdefghiklmnopqrsvxyzABCDEFGHIKLMNOPQRSVXYZ"
+    ; "abcdefghiklmnopqrtvxyzABCDEFGHIKLMNOPQRTVXYZ"
+    ; "abcdefghiklmnopqstvxyzABCDEFGHIKLMNOPQSTVXYZ"
+    ; "abcdefghiklmnoprstvxyzABCDEFGHIKLMNOPRSTVXYZ"
+    ; "abcdefghiklmnoqrstvxyzABCDEFGHIKLMNOQRSTVXYZ"
+    ; "abcdefghiklmnpqrstvxyzABCDEFGHIKLMNPQRSTVXYZ"
+    ; "abcdefghiklmopqrstvxyzABCDEFGHIKLMOPQRSTVXYZ"
+    ; "abcdefghiklnopqrstvxyzABCDEFGHIKLNOPQRSTVXYZ"
+    ; "abcdefghikmnopqrstvxyzABCDEFGHIKMNOPQRSTVXYZ"
+    ; "abcdefghilmnopqrstvxyzABCDEFGHILMNOPQRSTVXYZ"
+    ; "abcdefghiklmnopqrstvxyzABCDEFGHIKLMNOPQRSTVXYZ"
+    ; "abcdefghklmnopqrstvxyzABCDEFGHKLMNOPQRSTVXYZ"
+    ; "abcdefgiklmnopqrstvxyzABCDEFGIKLMNOPQRSTVXYZ"
+    ; "abcdefhiklmnopqrstvxyzABCDEFHIKLMNOPQRSTVXYZ"
+    ; "abcdeghiklmnopqrstvxyzABCDEGHIKLMNOPQRSTVXYZ"
+    ; "abcdfghiklmnopqrstvxyzABCDFGHIKLMNOPQRSTVXYZ"
+    ; "abcefghiklmnopqrstvxyzABCEFGHIKLMNOPQRSTVXYZ"
+    ; "abdefghiklmnopqrstvxyzABDEFGHIKLMNOPQRSTVXYZ"
+    ; "acdefghiklmnopqrstvxyzACDEFGHIKLMNOPQRSTVXYZ"
+    ; "bcdefghiklmnopqrstvxyzBCDEFGHIKLMNOPQRSTVXYZ" ]
 
 let part2 lines =
   lines
