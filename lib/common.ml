@@ -6,3 +6,5 @@ let read_line ~filename =
 let ( ||> ) (x, y) f = f x y
 
 let%test _ = (1, 2) ||> ( + ) = 3
+
+let ignore _ = ()
